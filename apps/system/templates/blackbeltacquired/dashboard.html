@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Hello, {{users.name}}!</h1><h3 style="color: red;">{{request.session.dupedatetime_error}}{{request.session.futuretime_error}}{{request.session.emptyfield_error}}</h3>
+        <h3>Here are your appointments for today, {{today}}:</h3>
+        <table style="width:80%">
+          <tr>
+            <th>Tasks</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          {% for appt in todayappt %}
+          <tr>
+            <td>{{appt.task}}</td>
+            <td>{{appt.time}}</td>
+            <td>{{appt.date}}</td>
+            <td>{{appt.status}}</td>
+            <td>
+                {% if appt.status == 'pending' %}
+                    <form class="editappt" action="editAppt/{{appt.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Edit">
+                    </form>
+                    <form class="editappt" action="deleteAppt" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Delete">
+                        <input type="hidden" name="appt_id" value="{{appt.id}}">
+                    </form>
+                {% endif %}
+
+                {% if appt.status == 'Pending' %}
+                    <form class="editappt" action="editAppt/{{appt.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Edit">
+                    </form>
+                    <form class="editappt" action="deleteAppt" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Delete">
+                        <input type="hidden" name="appt_id" value="{{appt.id}}">
+                    </form>
+                {% endif %}
+
+                {% if appt.status == 'missed' %}
+                    <form class="editappt" action="editAppt/{{appt.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Edit">
+                    </form>
+                    <form class="editappt" action="deleteAppt" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Delete">
+                        <input type="hidden" name="appt_id" value="{{appt.id}}">
+                    </form>
+                {% endif %}
+
+                {% if appt.status == 'Missed' %}
+                    <form class="editappt" action="editAppt/{{appt.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Edit">
+                    </form>
+                    <form class="editappt" action="deleteAppt" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="Submit" value="Delete">
+                        <input type="hidden" name="appt_id" value="{{appt.id}}">
+                    </form>
+                {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        <h3>Your future appointments:</h3>
+        <table style="width:80%">
+          <tr>
+            <th>Tasks</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          {% for appt in futureappt %}
+          <tr>
+            <td>{{appt.task}}</td>
+            <td>{{appt.time}}</td>
+            <td>{{appt.date}}</td>
+            <td>{{appt.status}}</td>
+            <td>actions to take</td>
+          </tr>
+          {% endfor %}
+        </table>
+        <h3>Add an appointment:</h3>
+        <form class="appt" action="addAppt" method="post">
+            {% csrf_token %}
+            Date: <input id="date" type="date" name="date"><br>
+            Time: <input id="time" type="time" name="time"><br>
+            Task: <input type="text" name="task" value=""><br>
+            <input type="submit" name="Submit" value="Add">
+        </form>
+        <a href="/logout">LOG OUT</a>
+    </body>
+</html>

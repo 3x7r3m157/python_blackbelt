@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <form class="" action="processApptUpdate" method="post">
+            {% csrf_token %}
+            Task: <input type="text" name="task" value="{{appt.task}}"><br>
+            Status:
+            {% if appt.status == 'pending' %}
+                <select name="status">
+                  <option value="Pending">Pending</option>
+                  <option value="Missed">Missed</option>
+                  <option value="Done">Done</option>
+                </select>
+            {% endif %}<br>
+            {% if appt.status == 'missed' %}
+                <select name="status">
+                  <option value="Missed">Missed</option>
+                  <option value="Done">Done</option>
+                  <option value="Pending">Pending</option>
+                </select>
+            {% endif %}
+            {% if appt.status == 'done' %}
+                <select name="status">
+                  <option value="Done">Done</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Missed">Missed</option>
+                </select>
+            {% endif %}
+            Date: <input id="date" type="date" name="date" value="{{date}}"><br>
+            Time: <input id="time" type="time" name="time" value="{{time}}"><br>
+            <input type="submit" name="Submit" value="Update">
+            <input type="hidden" name="appt_id" value="{{appt.id}}">
+        </form>
+        <a href="/dashboard">Back to Dashboard</a>
+    </body>
+</html>
